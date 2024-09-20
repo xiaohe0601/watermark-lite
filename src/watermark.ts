@@ -113,6 +113,8 @@ export class Watermark {
 
     el.id = this._options.el;
     el.style.position = "absolute";
+    el.style.top = "0";
+    el.style.left = "0";
     el.style.zIndex = `${this._options.zIndex}`;
     el.style.pointerEvents = "none";
 
