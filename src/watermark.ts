@@ -112,7 +112,7 @@ export class Watermark {
     const el = document.createElement("div");
 
     el.id = this._options.el;
-    el.style.position = "relative";
+    el.style.position = "absolute";
     el.style.zIndex = `${this._options.zIndex}`;
     el.style.pointerEvents = "none";
 
