@@ -41,7 +41,6 @@
   ],
   "scripts": {
     "prepare": "simple-git-hooks",
-    "postinstall": "nr build",
     "play": "nr -C playground dev",
     "build": "unbuild",
     "prepublishOnly": "nr build",
