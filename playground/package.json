@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "@watermark-lite/playground",
   "type": "module",
   "version": "0.0.6",
   "private": true,
@@ -9,12 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.6",
+    "vue": "^3.5.8",
     "watermark-lite": "workspace:^"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
-    "vite": "^5.4.6",
+    "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"
   }
 }

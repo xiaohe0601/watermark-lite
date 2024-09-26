@@ -1,9 +1,5 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "allowImportingTsExtensions": true
-  },
+  "extends": "@xiaohe01/tsconfig/app-vue",
   "references": [
     { "path": "./tsconfig.node.json" }
   ],

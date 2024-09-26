@@ -39,8 +39,11 @@ jobs:
       - name: Install
         run: nci
 
+      - name: Build
+        run: nr build
+
       - name: Publish
-        run: pnpm publish -r --access public
+        run: pnpm publish --filter ./packages/** --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           NPM_CONFIG_PROVENANCE: true

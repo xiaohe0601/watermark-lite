@@ -1,0 +1,44 @@
+{
+  "name": "watermark-lite",
+  "type": "module",
+  "version": "0.0.6",
+  "description": "💻 a lightweight watermark plugin 一个轻量级水印插件",
+  "author": "xiaohe0601 <xiaohe0601@outlook.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/xiaohe0601",
+  "homepage": "https://github.com/xiaohe0601/watermark-lite#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaohe0601/watermark-lite.git"
+  },
+  "bugs": "https://github.com/xiaohe0601/watermark-lite/issues",
+  "keywords": [
+    "watermark"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild"
+  }
+}
