@@ -1,7 +1,7 @@
 {
   "name": "@watermark-lite/monorepo",
   "type": "module",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "packageManager": "pnpm@9.11.0",
   "description": "💻 a lightweight watermark plugin 一个轻量级水印插件",
