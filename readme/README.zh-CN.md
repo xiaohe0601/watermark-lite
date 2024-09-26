@@ -71,6 +71,28 @@ wm.mount({
 wm.unmount();
 ```
 
+#### 默认实例
+
+自 `0.0.7` 开始，可以直接使用导出的默认实例
+
+```ts
+import { watermark } from "watermark-lite";
+
+watermark.mount({
+  text: "水印文字"
+});
+```
+
+也可以使用 `watermark` 的别名 `wm`
+
+```ts
+import { wm } from "watermark-lite";
+
+wm.mount({
+  text: "水印文字"
+});
+```
+
 #### 自定义水印样式
 
 ```ts

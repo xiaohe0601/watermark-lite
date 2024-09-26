@@ -218,3 +218,7 @@ export class Watermark {
     this._remove();
   }
 }
+
+export const watermark = new Watermark();
+
+export const wm = watermark;

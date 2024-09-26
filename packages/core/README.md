@@ -69,6 +69,28 @@ wm.mount({
 wm.unmount();
 ```
 
+#### Default Instance
+
+Since version `0.0.7`, you can directly use the exported default instance
+
+```ts
+import { watermark } from "watermark-lite";
+
+watermark.mount({
+  text: "watermark text"
+});
+```
+
+You can also use the alias `wm` for `watermark`
+
+```ts
+import { wm } from "watermark-lite";
+
+wm.mount({
+  text: "watermark text"
+});
+```
+
 #### Custom Watermark Style
 
 ```ts
