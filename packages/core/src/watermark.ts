@@ -1,7 +1,8 @@
-import type { NullableValue, WatermarkOptions } from "./types";
 import { combineOptions, getEl } from "./helpers";
+import type { NullableValue, WatermarkOptions } from "./types";
 
 export class Watermark {
+
   _options = combineOptions();
 
   _manualUnmount = false;
@@ -148,20 +149,20 @@ export class Watermark {
       / finalRows
     );
 
-    const totalWidth
-      = this._options.x + this._options.itemWidth * finalCols + finalXGap * (finalCols - 1);
-    const totalHeight
-      = this._options.y + this._options.itemHeight * finalRows + finalYGap * (finalRows - 1);
+    const totalWidth =
+      this._options.x + this._options.itemWidth * finalCols + finalXGap * (finalCols - 1);
+    const totalHeight =
+      this._options.y + this._options.itemHeight * finalRows + finalYGap * (finalRows - 1);
 
     for (let i = 0; i < finalRows; i += 1) {
-      const y
-        = this._options.y
+      const y =
+        this._options.y
         + (parentHeight - totalHeight) / 2
         + (this._options.itemHeight + finalYGap) * i;
 
       for (let j = 0; j < finalCols; j += 1) {
-        const x
-          = this._options.x
+        const x =
+          this._options.x
           + (parentWidth - totalWidth) / 2
           + (this._options.itemWidth + finalXGap) * j;
 
@@ -217,6 +218,7 @@ export class Watermark {
 
     this._remove();
   }
+
 }
 
 export const watermark = new Watermark();

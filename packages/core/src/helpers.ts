@@ -1,5 +1,5 @@
-import type { NullableValue, OptionalValue, WatermarkOptions } from "./types";
 import { defaultSettings } from "./config";
+import type { NullableValue, OptionalValue, WatermarkOptions } from "./types";
 
 export function combineOptions(...options: Partial<WatermarkOptions | undefined>[]): WatermarkOptions {
   return Object.assign({}, defaultSettings, ...options);
