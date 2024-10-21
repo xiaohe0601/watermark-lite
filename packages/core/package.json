@@ -40,5 +40,11 @@
   ],
   "scripts": {
     "build": "unbuild"
+  },
+  "dependencies": {
+    "throttle-debounce": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/throttle-debounce": "^5.0.2"
   }
 }

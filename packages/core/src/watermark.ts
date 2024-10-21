@@ -1,3 +1,4 @@
+import { throttle } from "throttle-debounce";
 import { combineOptions, getEl } from "./helpers";
 import type { NullableValue, WatermarkOptions } from "./types";
 
@@ -40,7 +41,7 @@ export class Watermark {
 
       if (this._parentSize.inlineSize !== entrySize.inlineSize
         || this._parentSize.blockSize !== entrySize.blockSize) {
-        this._update();
+        this._throttleUpdate();
       }
     });
 
@@ -82,7 +83,7 @@ export class Watermark {
         if (removedNode != null
           && removedNode instanceof HTMLElement
           && removedNode.id === this._options.el) {
-          this._update();
+          this._throttleUpdate();
         }
 
         return;
@@ -95,14 +96,14 @@ export class Watermark {
       }
 
       if (mutation.target === el) {
-        this._update();
+        this._throttleUpdate();
         return;
       }
 
       if (mutation.target instanceof HTMLElement
         && mutation.target.id.length > 0
         && mutation.target.id.startsWith(this._options.itemIdPrefix)) {
-        this._update();
+        this._throttleUpdate();
       }
     });
 
@@ -216,6 +217,8 @@ export class Watermark {
       this._startMutationObserver();
     }
   }
+
+  _throttleUpdate = throttle(200, this._update);
 
   _remove(): void {
     const el = getEl(this._options.el);
