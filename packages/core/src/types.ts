@@ -74,9 +74,9 @@ export interface WatermarkOptions {
    */
   opacity: number;
   /**
-   * 水印倾斜角度（取值范围：`0` ~ `360`）
+   * 水印旋转角度（取值范围：`0` ~ `360`）
    */
-  angle: number;
+  rotate: number;
   /**
    * 水印挂载父元素（默认值：`document.body`）
    */

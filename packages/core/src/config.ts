@@ -17,6 +17,6 @@ export const defaultSettings: WatermarkOptions = {
   fontFamily: "inherit",
   color: "#000000",
   opacity: 0.15,
-  angle: 15,
+  rotate: 15,
   monitor: true
 };

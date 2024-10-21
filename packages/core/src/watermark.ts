@@ -208,7 +208,7 @@ export class Watermark {
         itemEl.style.fontFamily = this._options.fontFamily;
         itemEl.style.color = this._options.color;
         itemEl.style.opacity = `${this._options.opacity}`;
-        itemEl.style.transform = `rotate(-${this._options.angle}deg)`;
+        itemEl.style.transform = `rotate(-${this._options.rotate}deg)`;
         itemEl.style.overflow = "hidden";
 
         el.appendChild(itemEl);

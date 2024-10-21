@@ -102,7 +102,7 @@ wm.mount({
   fontFamily: "inherit",
   color: "#000000",
   opacity: 0.15,
-  angle: 15
+  rotate: 15
 });
 ```
 
@@ -142,27 +142,28 @@ onBeforeUnmount(() => {
 
 #### 配置项
 
-| 参数           | 说明                       | 类型                     | 默认值               |
-|--------------|--------------------------|------------------------|-------------------|
-| el           | 水印元素id                   | string                 | watermark         |
-| text         | 水印文字                     | string                 | default watermark |
-| x            | 水印起始位置x坐标（单位：px）         | number                 | `0`               |
-| y            | 水印起始位置y坐标（单位：px）         | number                 | `0`               |
-| rows         | 水印行数                     | number                 | 自动计算              |
-| cols         | 水印列数                     | number                 | 自动计算              |
-| xGap         | 水印x轴间距（单位：px）            | number                 | `50`              |
-| yGap         | 水印y轴间隔（单位：px）            | number                 | `50`              |
-| zIndex       | 水印的 `z-index`            | number / string        | `99999`           |
-| itemIdPrefix | 水印子项id前缀                 | string                 | watermark-item    |
-| itemWidth    | 水印子项宽度（单位：px）            | number                 | `100`             |
-| itemHeight   | 水印子项高度（单位：px）            | number                 | `100`             |
-| fontSize     | 水印字体大小                   | string                 | 14px              |
-| fontFamily   | 水印字体                     | string                 | inherit           |
-| color        | 水印文字颜色                   | string                 | #000000           |
-| opacity      | 水印透明度（取值范围：`0` ~ `1`）    | number                 | `0.15`            |
-| angle        | 水印倾斜角度（取值范围：`0` ~ `360`） | number                 | `15`              |
-| parentEl     | 水印挂载父元素                  | string / `HTMLElement` | `document.body`   |
-| monitor      | 是否监听水印改变并自动重建            | boolean                | `true`            |
+| 参数               | 说明                                                   | 类型                     | 默认值               |
+|------------------|------------------------------------------------------|------------------------|-------------------|
+| el               | 水印元素id                                               | string                 | watermark         |
+| text             | 水印文字                                                 | string                 | default watermark |
+| x                | 水印起始位置x坐标（单位：px）                                     | number                 | `0`               |
+| y                | 水印起始位置y坐标（单位：px）                                     | number                 | `0`               |
+| rows             | 水印行数                                                 | number                 | 自动计算              |
+| cols             | 水印列数                                                 | number                 | 自动计算              |
+| xGap             | 水印x轴间距（单位：px）                                        | number                 | `50`              |
+| yGap             | 水印y轴间隔（单位：px）                                        | number                 | `50`              |
+| zIndex           | 水印的 `z-index`                                        | number / string        | `99999`           |
+| itemIdPrefix     | 水印子项id前缀                                             | string                 | watermark-item    |
+| itemWidth        | 水印子项宽度（单位：px）                                        | number                 | `100`             |
+| itemHeight       | 水印子项高度（单位：px）                                        | number                 | `100`             |
+| fontSize         | 水印字体大小                                               | string                 | 14px              |
+| fontFamily       | 水印字体                                                 | string                 | inherit           |
+| color            | 水印文字颜色                                               | string                 | #000000           |
+| opacity          | 水印透明度（取值范围：`0` ~ `1`）                                | number                 | `0.15`            |
+| rotate `0.1.0`   | 水印旋转角度（取值范围：`0` ~ `360`）                             | number                 | `15`              |
+| parentEl         | 水印挂载父元素                                              | string / `HTMLElement` | `document.body`   |
+| monitor          | 是否监听水印改变并自动重建                                        | boolean                | `true`            |
+| angle `0.1.0 移除` | 水印旋转角度（取值范围：`0` ~ `360`）（`0.1.0` 移除，请使用 `rotate` 代替） | number                 | `15`              |
 
 #### 类型定义
 

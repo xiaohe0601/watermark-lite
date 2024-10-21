@@ -102,7 +102,7 @@ wm.mount({
   fontFamily: "inherit",
   color: "#000000",
   opacity: 0.15,
-  angle: 15
+  rotate: 15
 });
 ```
 
@@ -144,27 +144,28 @@ onBeforeUnmount(() => {
 
 #### Configuration Options
 
-| Parameter    | Description                                         | Type                   | Default           |
-|--------------|-----------------------------------------------------|------------------------|-------------------|
-| el           | watermark element id                                | string                 | watermark         |
-| text         | watermark text                                      | string                 | default watermark |
-| x            | watermark starting x-coordinate (px)                | number                 | `0`               |
-| y            | watermark starting y-coordinate (px)                | number                 | `0`               |
-| rows         | number of watermark rows                            | number                 | auto-calculated   |
-| cols         | number of watermark columns                         | number                 | auto-calculated   |
-| xGap         | watermark x-axis spacing (px)                       | number                 | `50`              |
-| yGap         | watermark y-axis spacing (px)                       | number                 | `50`              |
-| zIndex       | `z-index` of the watermark                          | number / string        | `99999`           |
-| itemIdPrefix | prefix for watermark item ids                       | string                 | watermark-item    |
-| itemWidth    | width of the watermark item (px)                    | number                 | `100`             |
-| itemHeight   | height of the watermark item (px)                   | number                 | `100`             |
-| fontSize     | watermark font size                                 | string                 | 14px              |
-| fontFamily   | watermark font                                      | string                 | inherit           |
-| color        | watermark text color                                | string                 | #000000           |
-| opacity      | watermark opacity (range: `0` ~ `1`)                | number                 | `0.15`            |
-| angle        | watermark angle (range: `0` ~ `360`)                | number                 | `15`              |
-| parentEl     | parent element for watermark                        | string / `HTMLElement` | `document.body`   |
-| monitor      | monitor watermark changes and automatically rebuild | boolean                | `true`            |
+| Parameter             | Description                                                                      | Type                   | Default           |
+|-----------------------|----------------------------------------------------------------------------------|------------------------|-------------------|
+| el                    | watermark element id                                                             | string                 | watermark         |
+| text                  | watermark text                                                                   | string                 | default watermark |
+| x                     | watermark starting x-coordinate (px)                                             | number                 | `0`               |
+| y                     | watermark starting y-coordinate (px)                                             | number                 | `0`               |
+| rows                  | number of watermark rows                                                         | number                 | auto-calculated   |
+| cols                  | number of watermark columns                                                      | number                 | auto-calculated   |
+| xGap                  | watermark x-axis spacing (px)                                                    | number                 | `50`              |
+| yGap                  | watermark y-axis spacing (px)                                                    | number                 | `50`              |
+| zIndex                | `z-index` of the watermark                                                       | number / string        | `99999`           |
+| itemIdPrefix          | prefix for watermark item ids                                                    | string                 | watermark-item    |
+| itemWidth             | width of the watermark item (px)                                                 | number                 | `100`             |
+| itemHeight            | height of the watermark item (px)                                                | number                 | `100`             |
+| fontSize              | watermark font size                                                              | string                 | 14px              |
+| fontFamily            | watermark font                                                                   | string                 | inherit           |
+| color                 | watermark text color                                                             | string                 | #000000           |
+| opacity               | watermark opacity (range: `0` ~ `1`)                                             | number                 | `0.15`            |
+| rotate `0.1.0`        | watermark rotate (range: `0` ~ `360`)                                            | number                 | `15`              |
+| parentEl              | parent element for watermark                                                     | string / `HTMLElement` | `document.body`   |
+| monitor               | monitor watermark changes and automatically rebuild                              | boolean                | `true`            |
+| angle `0.1.0 removed` | watermark rotate (range: `0` ~ `360`) (removed in `0.1.0`, use `rotate` instead) | number                 | `15`              |
 
 #### Type Definitions
 
