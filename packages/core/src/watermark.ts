@@ -11,38 +11,61 @@ export class Watermark {
     return getEl(this._options.parentEl) || document.body;
   }
 
-  _resizeHandler: NullableValue<() => void> = null;
+  _parentSize: NullableValue<ResizeObserverSize> = null;
 
-  _startResizeListener(): void {
-    if (this._resizeHandler != null) {
-      this._stopResizeListener();
+  _resizeObserver: NullableValue<ResizeObserver> = null;
+
+  _startResizeObserver(): void {
+    if (this._resizeObserver != null) {
+      this._stopResizeObserver();
     }
 
-    this._resizeHandler = () => {
-      this._update();
-    };
+    this._resizeObserver = new ResizeObserver((entries) => {
+      const [entry] = entries;
 
-    window.addEventListener("resize", this._resizeHandler);
+      if (entry == null) {
+        return;
+      }
+
+      const entrySize = entry.borderBoxSize[0];
+
+      if (entrySize == null) {
+        return;
+      }
+
+      if (this._parentSize == null) {
+        this._parentSize = entrySize;
+        return;
+      }
+
+      if (this._parentSize.inlineSize !== entrySize.inlineSize
+        || this._parentSize.blockSize !== entrySize.blockSize) {
+        this._update();
+      }
+    });
+
+    this._resizeObserver.observe(this._getParentEl());
   }
 
-  _stopResizeListener(): void {
-    if (this._resizeHandler == null) {
+  _stopResizeObserver(): void {
+    if (this._resizeObserver == null) {
       return;
     }
 
-    window.removeEventListener("resize", this._resizeHandler);
+    this._resizeObserver.disconnect();
+    this._resizeObserver = null;
 
-    this._resizeHandler = null;
+    this._parentSize = null;
   }
 
-  _observer: NullableValue<MutationObserver> = null;
+  _mutationObserver: NullableValue<MutationObserver> = null;
 
   _startMutationObserver(): void {
-    if (this._observer != null) {
+    if (this._mutationObserver != null) {
       this._stopMutationObserver();
     }
 
-    this._observer = new MutationObserver((mutations) => {
+    this._mutationObserver = new MutationObserver((mutations) => {
       if (this._manualUnmount) {
         return;
       }
@@ -83,7 +106,7 @@ export class Watermark {
       }
     });
 
-    this._observer.observe(this._getParentEl(), {
+    this._mutationObserver.observe(this._getParentEl(), {
       subtree: true,
       childList: true,
       attributes: true,
@@ -92,12 +115,12 @@ export class Watermark {
   }
 
   _stopMutationObserver(): void {
-    if (this._observer == null) {
+    if (this._mutationObserver == null) {
       return;
     }
 
-    this._observer.disconnect();
-    this._observer = null;
+    this._mutationObserver.disconnect();
+    this._mutationObserver = null;
   }
 
   _update(): void {
@@ -209,11 +232,11 @@ export class Watermark {
 
     this._update();
 
-    this._startResizeListener();
+    this._startResizeObserver();
   }
 
   unmount(): void {
-    this._stopResizeListener();
+    this._stopResizeObserver();
     this._stopMutationObserver();
 
     this._remove();
