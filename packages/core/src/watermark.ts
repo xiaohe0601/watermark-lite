@@ -199,11 +199,13 @@ export class Watermark {
         itemEl.style.position = "absolute";
         itemEl.style.top = `${y}px`;
         itemEl.style.left = `${x}px`;
+        itemEl.style.display = "flex";
+        itemEl.style.alignItems = "center";
+        itemEl.style.justifyContent = "center";
         itemEl.style.width = `${this._options.itemWidth}px`;
         itemEl.style.height = `${this._options.itemHeight}px`;
         itemEl.style.fontSize = this._options.fontSize;
         itemEl.style.fontFamily = this._options.fontFamily;
-        itemEl.style.textAlign = "center";
         itemEl.style.color = this._options.color;
         itemEl.style.opacity = `${this._options.opacity}`;
         itemEl.style.transform = `rotate(-${this._options.angle}deg)`;
