@@ -1,12 +1,20 @@
 import { throttle } from "throttle-debounce";
 import { combineOptions, getEl } from "./helpers";
+import { DomRenderer } from "./renderer/DomRenderer";
+import type { Renderer } from "./renderer/Renderer";
 import type { NullableValue, WatermarkOptions } from "./types";
 
 export class Watermark {
 
+  _renderer: Renderer;
+
   _options = combineOptions();
 
   _manualUnmount = false;
+
+  constructor(renderer: Renderer = new DomRenderer()) {
+    this._renderer = renderer;
+  }
 
   _getParentEl(): HTMLElement {
     return getEl(this._options.parentEl) || document.body;
@@ -127,93 +135,7 @@ export class Watermark {
   _update(): void {
     this._remove();
 
-    this._manualUnmount = false;
-
-    const parentEl = this._getParentEl();
-
-    const parentWidth = Math.max(parentEl.scrollWidth, parentEl.clientWidth);
-    const parentHeight = Math.max(parentEl.scrollHeight, parentEl.clientHeight);
-
-    const el = document.createElement("div");
-
-    el.id = this._options.el;
-    el.style.position = "absolute";
-    el.style.top = "0";
-    el.style.left = "0";
-    el.style.zIndex = `${this._options.zIndex}`;
-    el.style.pointerEvents = "none";
-
-    const parentChildren = parentEl.children;
-    const randomIndex = Math.floor(Math.random() * parentChildren.length);
-    if (parentChildren[randomIndex]) {
-      parentEl.insertBefore(el, parentChildren[randomIndex]!);
-    } else {
-      parentEl.appendChild(el);
-    }
-
-    const finalCols = this._options.cols > 0
-      ? this._options.cols
-      : Math.floor(
-        (parentWidth - this._options.x)
-        / (this._options.itemWidth + this._options.xGap)
-      );
-    const finalRows = this._options.rows > 0
-      ? this._options.rows
-      : Math.floor(
-        (parentHeight - this._options.y)
-        / (this._options.itemHeight + this._options.yGap)
-      );
-
-    const finalXGap = Math.floor(
-      (parentWidth - this._options.x - this._options.itemWidth * finalCols)
-      / finalCols
-    );
-    const finalYGap = Math.floor(
-      (parentHeight - this._options.y - this._options.itemHeight * finalRows)
-      / finalRows
-    );
-
-    const totalWidth =
-      this._options.x + this._options.itemWidth * finalCols + finalXGap * (finalCols - 1);
-    const totalHeight =
-      this._options.y + this._options.itemHeight * finalRows + finalYGap * (finalRows - 1);
-
-    for (let i = 0; i < finalRows; i += 1) {
-      const y =
-        this._options.y
-        + (parentHeight - totalHeight) / 2
-        + (this._options.itemHeight + finalYGap) * i;
-
-      for (let j = 0; j < finalCols; j += 1) {
-        const x =
-          this._options.x
-          + (parentWidth - totalWidth) / 2
-          + (this._options.itemWidth + finalXGap) * j;
-
-        const itemEl = document.createElement("div");
-        const itemTextEl = document.createTextNode(this._options.text);
-
-        itemEl.appendChild(itemTextEl);
-
-        itemEl.id = `${this._options.itemIdPrefix}${i}${j}`;
-        itemEl.style.position = "absolute";
-        itemEl.style.top = `${y}px`;
-        itemEl.style.left = `${x}px`;
-        itemEl.style.display = "flex";
-        itemEl.style.alignItems = "center";
-        itemEl.style.justifyContent = "center";
-        itemEl.style.width = `${this._options.itemWidth}px`;
-        itemEl.style.height = `${this._options.itemHeight}px`;
-        itemEl.style.fontSize = this._options.fontSize;
-        itemEl.style.fontFamily = this._options.fontFamily;
-        itemEl.style.color = this._options.color;
-        itemEl.style.opacity = `${this._options.opacity}`;
-        itemEl.style.transform = `rotate(-${this._options.rotate}deg)`;
-        itemEl.style.overflow = "hidden";
-
-        el.appendChild(itemEl);
-      }
-    }
+    this._renderer.update(this);
 
     if (this._options.monitor) {
       this._startMutationObserver();
@@ -223,13 +145,7 @@ export class Watermark {
   _throttleUpdate = throttle(200, this._update);
 
   _remove(): void {
-    const el = getEl(this._options.el);
-
-    if (el && el.parentNode) {
-      this._manualUnmount = true;
-
-      el.parentNode.removeChild(el);
-    }
+    this._renderer.remove(this);
   }
 
   mount(options?: Partial<WatermarkOptions>): void {
