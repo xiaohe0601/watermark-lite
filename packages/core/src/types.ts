@@ -1,3 +1,6 @@
+import type { Observer } from "./observer";
+import type { Renderer } from "./renderer";
+
 export type OptionalValue<T> = T | undefined;
 export type OptionalNumber = OptionalValue<number>;
 export type OptionalString = OptionalValue<string>;
@@ -7,6 +10,11 @@ export type NullableValue<T> = T | null;
 export type NullableNumber = NullableValue<number>;
 export type NullableString = NullableValue<string>;
 export type NullableBoolean = NullableValue<boolean>;
+
+export interface WatermarkInitOptions {
+  renderer?: Renderer;
+  observer?: Observer;
+}
 
 export interface WatermarkOptions {
   /**
