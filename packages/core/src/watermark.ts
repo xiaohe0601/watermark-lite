@@ -1,5 +1,5 @@
 import { throttle } from "throttle-debounce";
-import { combineOptions, getEl } from "./helpers";
+import { combineOptions } from "./helpers";
 import type { Observer } from "./observer";
 import { DomObserver } from "./observer";
 import type { Renderer } from "./renderer";
@@ -14,31 +14,29 @@ export class Watermark {
 
   _options = combineOptions();
 
-  _manualUnmount = false;
-
   constructor(options: WatermarkInitOptions = {}) {
     this._renderer = options.renderer || new DomRenderer();
     this._observer = options.observer || new DomObserver();
   }
 
-  _getParentEl(): HTMLElement {
-    return getEl(this._options.parentEl) || document.body;
-  }
-
   _update(): void {
-    this._remove();
+    this._clear();
+
+    this._observer.setManualUnmount(false);
 
     this._renderer.update(this);
 
-    if (this._options.monitor) {
+    if ("monitor" in this._options && this._options.monitor) {
       this._observer.observeMutate(this);
     }
   }
 
   _throttleUpdate = throttle(200, this._update);
 
-  _remove(): void {
-    this._renderer.remove(this);
+  _clear(): void {
+    this._observer.setManualUnmount(true);
+
+    this._renderer.clear(this);
   }
 
   mount(options?: Partial<WatermarkOptions>): void {
@@ -53,7 +51,7 @@ export class Watermark {
     this._observer.neglectResize();
     this._observer.neglectMutate();
 
-    this._remove();
+    this._clear();
   }
 
 }

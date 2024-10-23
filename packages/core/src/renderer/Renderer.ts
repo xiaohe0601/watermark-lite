@@ -4,6 +4,6 @@ export abstract class Renderer {
 
   abstract update(wm: Watermark): void;
 
-  abstract remove(wm: Watermark): void;
+  abstract clear(wm: Watermark): void;
 
 }

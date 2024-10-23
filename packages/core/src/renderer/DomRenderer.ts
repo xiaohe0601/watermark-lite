@@ -1,24 +1,33 @@
 import { getEl } from "../helpers";
+import type { WatermarkDomOptions } from "../types";
 import type { Watermark } from "../watermark";
 import { Renderer } from "./Renderer";
 
 export class DomRenderer extends Renderer {
 
-  public update(wm: Watermark): void {
-    wm._manualUnmount = false;
+  _getOptions(wm: Watermark): WatermarkDomOptions {
+    return wm._options as WatermarkDomOptions;
+  }
 
-    const parentEl = wm._getParentEl();
+  _getParentEl(wm: Watermark): HTMLElement {
+    return getEl(this._getOptions(wm).parentEl) || document.body;
+  }
+
+  public update(wm: Watermark): void {
+    const options = this._getOptions(wm);
+
+    const parentEl = this._getParentEl(wm);
 
     const parentWidth = Math.max(parentEl.scrollWidth, parentEl.clientWidth);
     const parentHeight = Math.max(parentEl.scrollHeight, parentEl.clientHeight);
 
     const el = document.createElement("div");
 
-    el.id = wm._options.el;
+    el.id = options.el;
     el.style.position = "absolute";
     el.style.top = "0";
     el.style.left = "0";
-    el.style.zIndex = `${wm._options.zIndex}`;
+    el.style.zIndex = `${options.zIndex}`;
     el.style.pointerEvents = "none";
 
     const parentChildren = parentEl.children;
@@ -29,64 +38,64 @@ export class DomRenderer extends Renderer {
       parentEl.appendChild(el);
     }
 
-    const finalCols = wm._options.cols > 0
-      ? wm._options.cols
+    const finalCols = options.cols > 0
+      ? options.cols
       : Math.floor(
-        (parentWidth - wm._options.x)
-        / (wm._options.itemWidth + wm._options.xGap)
+        (parentWidth - options.x)
+        / (options.itemWidth + options.xGap)
       );
-    const finalRows = wm._options.rows > 0
-      ? wm._options.rows
+    const finalRows = options.rows > 0
+      ? options.rows
       : Math.floor(
-        (parentHeight - wm._options.y)
-        / (wm._options.itemHeight + wm._options.yGap)
+        (parentHeight - options.y)
+        / (options.itemHeight + options.yGap)
       );
 
     const finalXGap = Math.floor(
-      (parentWidth - wm._options.x - wm._options.itemWidth * finalCols)
+      (parentWidth - options.x - options.itemWidth * finalCols)
       / finalCols
     );
     const finalYGap = Math.floor(
-      (parentHeight - wm._options.y - wm._options.itemHeight * finalRows)
+      (parentHeight - options.y - options.itemHeight * finalRows)
       / finalRows
     );
 
     const totalWidth =
-      wm._options.x + wm._options.itemWidth * finalCols + finalXGap * (finalCols - 1);
+      options.x + options.itemWidth * finalCols + finalXGap * (finalCols - 1);
     const totalHeight =
-      wm._options.y + wm._options.itemHeight * finalRows + finalYGap * (finalRows - 1);
+      options.y + options.itemHeight * finalRows + finalYGap * (finalRows - 1);
 
     for (let i = 0; i < finalRows; i += 1) {
       const y =
-        wm._options.y
+        options.y
         + (parentHeight - totalHeight) / 2
-        + (wm._options.itemHeight + finalYGap) * i;
+        + (options.itemHeight + finalYGap) * i;
 
       for (let j = 0; j < finalCols; j += 1) {
         const x =
-          wm._options.x
+          options.x
           + (parentWidth - totalWidth) / 2
-          + (wm._options.itemWidth + finalXGap) * j;
+          + (options.itemWidth + finalXGap) * j;
 
         const itemEl = document.createElement("div");
-        const itemTextEl = document.createTextNode(wm._options.text);
+        const itemTextEl = document.createTextNode(options.text);
 
         itemEl.appendChild(itemTextEl);
 
-        itemEl.id = `${wm._options.itemIdPrefix}${i}${j}`;
+        itemEl.id = `${options.itemIdPrefix}${i}${j}`;
         itemEl.style.position = "absolute";
         itemEl.style.top = `${y}px`;
         itemEl.style.left = `${x}px`;
         itemEl.style.display = "flex";
         itemEl.style.alignItems = "center";
         itemEl.style.justifyContent = "center";
-        itemEl.style.width = `${wm._options.itemWidth}px`;
-        itemEl.style.height = `${wm._options.itemHeight}px`;
-        itemEl.style.fontSize = wm._options.fontSize;
-        itemEl.style.fontFamily = wm._options.fontFamily;
-        itemEl.style.color = wm._options.color;
-        itemEl.style.opacity = `${wm._options.opacity}`;
-        itemEl.style.transform = `rotate(-${wm._options.rotate}deg)`;
+        itemEl.style.width = `${options.itemWidth}px`;
+        itemEl.style.height = `${options.itemHeight}px`;
+        itemEl.style.fontSize = options.fontSize;
+        itemEl.style.fontFamily = options.fontFamily;
+        itemEl.style.color = options.color;
+        itemEl.style.opacity = `${options.opacity}`;
+        itemEl.style.transform = `rotate(-${options.rotate}deg)`;
         itemEl.style.overflow = "hidden";
 
         el.appendChild(itemEl);
@@ -94,12 +103,10 @@ export class DomRenderer extends Renderer {
     }
   }
 
-  public remove(wm: Watermark): void {
-    const el = getEl(wm._options.el);
+  public clear(wm: Watermark): void {
+    const el = getEl(this._getOptions(wm).el);
 
     if (el && el.parentNode) {
-      wm._manualUnmount = true;
-
       el.parentNode.removeChild(el);
     }
   }

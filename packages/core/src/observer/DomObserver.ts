@@ -1,9 +1,17 @@
 import { getEl } from "../helpers";
-import type { NullableValue } from "../types";
+import type { NullableValue, WatermarkDomOptions } from "../types";
 import type { Watermark } from "../watermark";
 import { Observer } from "./Observer";
 
 export class DomObserver extends Observer {
+
+  _getOptions(wm: Watermark): WatermarkDomOptions {
+    return wm._options as WatermarkDomOptions;
+  }
+
+  _getParentEl(wm: Watermark): HTMLElement {
+    return getEl(this._getOptions(wm).parentEl) || document.body;
+  }
 
   _parentSize: NullableValue<ResizeObserverSize> = null;
 
@@ -38,7 +46,7 @@ export class DomObserver extends Observer {
       }
     });
 
-    this._resizeObserver.observe(wm._getParentEl());
+    this._resizeObserver.observe(this._getParentEl(wm));
   }
 
   public neglectResize(): void {
@@ -60,7 +68,7 @@ export class DomObserver extends Observer {
     }
 
     this._mutationObserver = new MutationObserver((mutations) => {
-      if (wm._manualUnmount) {
+      if (this.isManualUnmount()) {
         return;
       }
 
@@ -70,19 +78,21 @@ export class DomObserver extends Observer {
         return;
       }
 
-      if (mutation.target === wm._getParentEl()) {
+      const options = this._getOptions(wm);
+
+      if (mutation.target === this._getParentEl(wm)) {
         const [removedNode] = mutation.removedNodes;
 
         if (removedNode != null
           && removedNode instanceof HTMLElement
-          && removedNode.id === wm._options.el) {
+          && removedNode.id === options.el) {
           wm._throttleUpdate();
         }
 
         return;
       }
 
-      const el = getEl(wm._options.el);
+      const el = getEl(options.el);
 
       if (el == null) {
         return;
@@ -95,12 +105,12 @@ export class DomObserver extends Observer {
 
       if (mutation.target instanceof HTMLElement
         && mutation.target.id.length > 0
-        && mutation.target.id.startsWith(wm._options.itemIdPrefix)) {
+        && mutation.target.id.startsWith(options.itemIdPrefix)) {
         wm._throttleUpdate();
       }
     });
 
-    this._mutationObserver.observe(wm._getParentEl(), {
+    this._mutationObserver.observe(this._getParentEl(wm), {
       subtree: true,
       childList: true,
       attributes: true,

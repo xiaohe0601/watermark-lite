@@ -16,11 +16,7 @@ export interface WatermarkInitOptions {
   observer?: Observer;
 }
 
-export interface WatermarkOptions {
-  /**
-   * 水印元素id
-   */
-  el: string;
+export interface WatermarkBaseOptions {
   /**
    * 水印文字
    */
@@ -50,14 +46,6 @@ export interface WatermarkOptions {
    */
   yGap: number;
   /**
-   * 水印的 `z-index`
-   */
-  zIndex: number | string;
-  /**
-   * 水印子项id前缀
-   */
-  itemIdPrefix: string;
-  /**
    * 水印子项宽度（单位：px）
    */
   itemWidth: number;
@@ -85,6 +73,21 @@ export interface WatermarkOptions {
    * 水印旋转角度（取值范围：`0` ~ `360`）
    */
   rotate: number;
+}
+
+export interface WatermarkDomOptions extends WatermarkBaseOptions {
+  /**
+   * 水印元素id
+   */
+  el: string;
+  /**
+   * 水印的 `z-index`
+   */
+  zIndex: number | string;
+  /**
+   * 水印子项id前缀
+   */
+  itemIdPrefix: string;
   /**
    * 水印挂载父元素（默认值：`document.body`）
    */
@@ -94,3 +97,16 @@ export interface WatermarkOptions {
    */
   monitor: boolean;
 }
+
+export interface WatermarkWithoutDomOptions extends WatermarkBaseOptions {
+  /**
+   * 水印宽度（单位：px）
+   */
+  width: number;
+  /**
+   * 水印高度（单位：px）
+   */
+  height: number;
+}
+
+export type WatermarkOptions = WatermarkDomOptions | WatermarkWithoutDomOptions;
