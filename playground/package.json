@@ -13,8 +13,8 @@
     "watermark-lite": "workspace:^"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.4",
-    "vite": "^5.4.10",
+    "@vitejs/plugin-vue": "^5.1.5",
+    "vite": "^5.4.11",
     "vue-tsc": "^2.1.10"
   }
 }
