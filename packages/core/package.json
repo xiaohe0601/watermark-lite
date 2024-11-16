@@ -1,7 +1,7 @@
 {
   "name": "watermark-lite",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "💻 a lightweight watermark plugin 一个轻量级水印插件",
   "author": "xiaohe0601 <xiaohe0601@outlook.com>",
   "license": "MIT",
