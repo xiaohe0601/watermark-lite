@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.12",
+    "vue": "^3.5.13",
     "watermark-lite": "workspace:^"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.5",
+    "@vitejs/plugin-vue": "^5.2.0",
     "vite": "^5.4.11",
     "vue-tsc": "^2.1.10"
   }
