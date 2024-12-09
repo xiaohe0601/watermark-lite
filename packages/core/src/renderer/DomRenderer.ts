@@ -41,15 +41,15 @@ export class DomRenderer extends Renderer {
     const finalCols = options.cols > 0
       ? options.cols
       : Math.floor(
-        (parentWidth - options.x)
-        / (options.itemWidth + options.xGap)
-      );
+          (parentWidth - options.x)
+          / (options.itemWidth + options.xGap)
+        );
     const finalRows = options.rows > 0
       ? options.rows
       : Math.floor(
-        (parentHeight - options.y)
-        / (options.itemHeight + options.yGap)
-      );
+          (parentHeight - options.y)
+          / (options.itemHeight + options.yGap)
+        );
 
     const finalXGap = Math.floor(
       (parentWidth - options.x - options.itemWidth * finalCols)
